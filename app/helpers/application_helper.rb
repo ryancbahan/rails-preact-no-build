@@ -1,6 +1,6 @@
 module ApplicationHelper
-  def mount_preact_page(page_name)
-    content_tag :div, id: "preact-#{page_name.underscore}-page" do
+  def mount_preact_page(page_name, props = {})
+    content_tag :div, id: "preact-#{page_name.underscore}-page", data: { props: props.to_json } do
       content_tag :script, type: "module" do
         <<~JAVASCRIPT.html_safe
           import { mountPage } from "mount_page"
@@ -16,7 +16,8 @@ module ApplicationHelper
           function initializePage() {
             const mountPoint = document.getElementById("preact-#{page_name.underscore}-page")
             if (mountPoint) {
-              mountPage("#{page_name}", mountPoint)
+              const props = JSON.parse(mountPoint.dataset.props || '{}')
+              mountPage("#{page_name}", mountPoint, props)
             }
           }
 

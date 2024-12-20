@@ -9,7 +9,7 @@ const pages = {
   DashboardPage
 }
 
-export function mountPage(pageName, element) {
+export function mountPage(pageName, element, props = {}) {
   const PageComponent = pages[pageName]
   
   if (!PageComponent) {
@@ -22,6 +22,6 @@ export function mountPage(pageName, element) {
     render(null, element)
   }
 
-  // Mount new component
-  element._preactRoot = render(h(PageComponent), element)
+  // Mount new component with props
+  element._preactRoot = render(h(PageComponent, props), element)
 } 

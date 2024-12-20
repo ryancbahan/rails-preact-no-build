@@ -26,10 +26,36 @@ const styles = {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1rem;
+  `,
+  stat: `
+    font-size: 2rem;
+    font-weight: 600;
+    color: #6366f1;
+    margin: 0.5rem 0;
+  `,
+  label: `
+    color: #4b5563;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+  `,
+  activity: `
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e5e7eb;
+    &:last-child {
+      border-bottom: none;
+    }
+  `,
+  activityTitle: `
+    font-weight: 500;
+    color: #111827;
+  `,
+  activityTime: `
+    color: #6b7280;
+    font-size: 0.875rem;
   `
 }
 
-export function DashboardPage() {
+export function DashboardPage({ stats = {}, recentActivities = [] }) {
   return html`
     <div style=${styles.container}>
       <${Navigation} />
@@ -41,12 +67,30 @@ export function DashboardPage() {
       <div style=${styles.grid}>
         <${Card}>
           <h2>Statistics</h2>
-          <p>View your latest stats and metrics here.</p>
+          <div>
+            <div style=${styles.label}>Total Users</div>
+            <div style=${styles.stat}>${stats.total_users || 0}</div>
+          </div>
+          <div>
+            <div style=${styles.label}>Active Users</div>
+            <div style=${styles.stat}>${stats.active_users || 0}</div>
+          </div>
+          <div>
+            <div style=${styles.label}>Total Revenue</div>
+            <div style=${styles.stat}>${stats.total_revenue || '$0'}</div>
+          </div>
         <//>
 
         <${Card}>
-          <h2>Activity</h2>
-          <p>Recent activity and notifications.</p>
+          <h2>Recent Activity</h2>
+          ${recentActivities.map(activity => html`
+            <div key=${activity.id} style=${styles.activity}>
+              <div style=${styles.activityTitle}>
+                ${activity.user} - ${activity.type}
+              </div>
+              <div style=${styles.activityTime}>${activity.time}</div>
+            </div>
+          `)}
         <//>
 
         <${Card}>

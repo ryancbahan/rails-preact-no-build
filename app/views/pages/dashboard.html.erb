@@ -1,1 +1,4 @@
-<%= mount_preact_page("DashboardPage") %> 
+<%= mount_preact_page("DashboardPage", { 
+  stats: @stats,
+  recentActivities: @recent_activities
+}) %> 
