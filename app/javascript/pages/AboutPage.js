@@ -1,6 +1,5 @@
 import { html } from "htm/preact"
 import { Card } from "components/Card"
-import { Counter } from "components/Counter"
 import { Navigation } from "components/Navigation"
 
 const styles = {
@@ -22,36 +21,22 @@ const styles = {
     margin: 0;
     font-size: 2.5rem;
     font-weight: 700;
-  `,
-  subtitle: `
-    margin: 1rem 0 0;
-    opacity: 0.9;
-    font-size: 1.1rem;
   `
 }
 
-export function HomePage() {
+export function AboutPage() {
   return html`
     <div style=${styles.container}>
       <${Navigation} />
       
       <header style=${styles.header}>
-        <h1 style=${styles.title}>Rails + Preact</h1>
-        <p style=${styles.subtitle}>A modern web stack for building fast, interactive applications</p>
+        <h1 style=${styles.title}>About Us</h1>
       </header>
 
       <${Card}>
-        <${Counter} />
-      <//>
-
-      <${Card}>
-        <h2>Features</h2>
-        <ul>
-          <li>Rails 7 for robust backend</li>
-          <li>Preact for lightweight UI</li>
-          <li>No build tools required</li>
-          <li>Modern CSS-in-JS styling</li>
-        </ul>
+        <h2>Our Story</h2>
+        <p>This is an example of a Rails application using Preact for the frontend, without any build tools.</p>
+        <p>We're showcasing how to use modern JavaScript features while keeping things simple and fast.</p>
       <//>
     </div>
   `

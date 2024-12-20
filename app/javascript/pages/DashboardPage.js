@@ -1,6 +1,5 @@
 import { html } from "htm/preact"
 import { Card } from "components/Card"
-import { Counter } from "components/Counter"
 import { Navigation } from "components/Navigation"
 
 const styles = {
@@ -23,36 +22,38 @@ const styles = {
     font-size: 2.5rem;
     font-weight: 700;
   `,
-  subtitle: `
-    margin: 1rem 0 0;
-    opacity: 0.9;
-    font-size: 1.1rem;
+  grid: `
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
   `
 }
 
-export function HomePage() {
+export function DashboardPage() {
   return html`
     <div style=${styles.container}>
       <${Navigation} />
       
       <header style=${styles.header}>
-        <h1 style=${styles.title}>Rails + Preact</h1>
-        <p style=${styles.subtitle}>A modern web stack for building fast, interactive applications</p>
+        <h1 style=${styles.title}>Dashboard</h1>
       </header>
 
-      <${Card}>
-        <${Counter} />
-      <//>
+      <div style=${styles.grid}>
+        <${Card}>
+          <h2>Statistics</h2>
+          <p>View your latest stats and metrics here.</p>
+        <//>
 
-      <${Card}>
-        <h2>Features</h2>
-        <ul>
-          <li>Rails 7 for robust backend</li>
-          <li>Preact for lightweight UI</li>
-          <li>No build tools required</li>
-          <li>Modern CSS-in-JS styling</li>
-        </ul>
-      <//>
+        <${Card}>
+          <h2>Activity</h2>
+          <p>Recent activity and notifications.</p>
+        <//>
+
+        <${Card}>
+          <h2>Settings</h2>
+          <p>Manage your account preferences.</p>
+        <//>
+      </div>
     </div>
   `
 } 
