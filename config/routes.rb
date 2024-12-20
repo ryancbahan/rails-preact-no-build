@@ -6,4 +6,7 @@ Rails.application.routes.draw do
   # Pages routes
   get "about", to: "pages#about"
   get "dashboard", to: "pages#dashboard"
+  
+  # API endpoints
+  post "api/settings", to: "pages#update_settings"
 end

@@ -1,6 +1,8 @@
 import { html } from "htm/preact"
 import { Card } from "components/Card"
 import { Navigation } from "components/Navigation"
+import { Form, Field } from "components/Form"
+import { useState } from "preact/hooks"
 
 const styles = {
   container: `
@@ -52,10 +54,27 @@ const styles = {
   activityTime: `
     color: #6b7280;
     font-size: 0.875rem;
+  `,
+  select: `
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    background-color: white;
+    &:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
   `
 }
 
 export function DashboardPage({ stats = {}, recentActivities = [] }) {
+  const [updatedSettings, setUpdatedSettings] = useState(null)
+
+  const handleSettingsSuccess = (data) => {
+    setUpdatedSettings(data.settings)
+  }
+
   return html`
     <div style=${styles.container}>
       <${Navigation} />
@@ -95,7 +114,38 @@ export function DashboardPage({ stats = {}, recentActivities = [] }) {
 
         <${Card}>
           <h2>Settings</h2>
-          <p>Manage your account preferences.</p>
+          ${updatedSettings && html`
+            <p style=${styles.success}>
+              Settings updated for ${updatedSettings.email} with ${updatedSettings.notification_preference} notifications
+            </p>
+          `}
+          <${Form} 
+            action="/api/settings"
+            onSuccess=${handleSettingsSuccess}
+          >
+            <${Field}
+              label="Email"
+              name="email"
+              type="email"
+              required=${true}
+            />
+            <div style=${styles.field}>
+              <label style=${styles.label} for="notification_preference">
+                Notification Preference
+              </label>
+              <select
+                name="notification_preference"
+                id="notification_preference"
+                style=${styles.select}
+                required
+              >
+                <option value="">Select a preference</option>
+                <option value="all">All Notifications</option>
+                <option value="important">Important Only</option>
+                <option value="none">None</option>
+              </select>
+            </div>
+          <//>
         <//>
       </div>
     </div>

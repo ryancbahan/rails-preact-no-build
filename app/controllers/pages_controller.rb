@@ -18,4 +18,19 @@ class PagesController < ApplicationController
       { id: 3, type: "login", user: "Bob Wilson", time: "5 hours ago" }
     ]
   end
+
+  def update_settings
+    # Simulate processing and validation
+    if params[:email].present? && params[:notification_preference].present?
+      render json: { 
+        message: "Settings updated successfully!",
+        settings: {
+          email: params[:email],
+          notification_preference: params[:notification_preference]
+        }
+      }
+    else
+      render json: { error: "Please fill in all required fields" }, status: :unprocessable_entity
+    end
+  end
 end 
